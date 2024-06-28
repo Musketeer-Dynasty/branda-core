@@ -1,18 +1,21 @@
 from pydantic import BaseModel
 
+
 class Strategy(BaseModel):
     industry: str
     niche: str
     country: str
 
+
 class Base(BaseModel):
-    niche : str
-    industry : str
+    niche: str
+    industry: str
 
 
 class UserInput(BaseModel):
     email: str
     password: str
+
 
 class BaseBody(BaseModel):
     name: str | None = None
@@ -25,3 +28,11 @@ class BaseBody(BaseModel):
     illustration: str | None = None
     presentation: str | None = None
 
+
+class LogoVariant(BaseModel):
+    name: str
+    url: str
+
+
+class Logo(BaseModel):
+    variants: list[LogoVariant]
