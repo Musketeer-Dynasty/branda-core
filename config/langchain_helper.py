@@ -11,6 +11,7 @@ from langchain_google_genai import GoogleGenerativeAI as gai
 from langchain_google_vertexai.vision_models import VertexAIImageGeneratorChat
 from langchain_openai import OpenAI
 
+
 md = markdown.Markdown()
 generator = VertexAIImageGeneratorChat(number_of_results=2, quality="standard")
 
@@ -98,6 +99,10 @@ def format_strategies(markdown_text):
         title_end_index = strategy.find("\n")
         title = strategy[1:title_end_index].strip()
         content = strategy[title_end_index:].strip()
+    for strategy in strategies:
+        title_end_index = strategy.find("\n")
+        title = strategy[1:title_end_index].strip()
+        content = strategy[title_end_index:].strip()
 
         strategy_dict = {f"Strategy {title}": content}
 
@@ -157,4 +162,5 @@ def generate_pics(industry: str):
     # ans = response.split("\n")
     image_url = DallEAPIWrapper(n=2).run(name_chain.invoke({"industry": industry}))
     response = image_url.split("\n")
+
     return response

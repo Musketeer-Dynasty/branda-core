@@ -22,6 +22,3 @@ class Settings(BaseSettings):
 def get_settings() -> Settings:
     "Retrieves app setting"
     return Settings
-
-
-

@@ -170,10 +170,17 @@ def create_illustration(base: BaseBody, userId: str, brandId: str):
 def update_brand_details(base: BaseBody, userId: str, brandId: str):
     return brand_service.update_brand_details(base, brandId, userId)
 
-
+  
 @router.get("/users/{userId}/brands", tags=["User"])
 def get_all_user_brand(userId: str):
     return user_Service.get_user_brands(userId)
+
+
+
+@router.get("/users/me", tags=["User"])
+def get_user_details(userId: str):
+    data = auth.get_user(userId)
+    return JSONResponse(content={"message": "Fetched users data", "data": data})
 
 
 @router.post("/login", tags=["Authentication"])
