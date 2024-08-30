@@ -163,3 +163,7 @@ def generate_pics(industry: str):
     response = image_url.split("\n")
 
     return response
+
+
+ans = generate_brand_messaging("blockchain", "defi")
+print(ans)

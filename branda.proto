@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+service BrandService {
+  rpc getBrandName(BaseRequest) returns (BrandNameResponse);
+  rpc getBrandColor(BaseRequest) returns (BrandColorResponse);
+  rpc getBrandLogo(BaseRequest) returns (BrandLogoResponse);
+  rpc getBrandStrategy(StrategyRequest) returns (StrategyResponse)
+}
+
+message BaseRequest {
+  string industry = 1;
+  string niche = 2;
+}
+
+message StrategyRequest {
+  string industry = 1;
+  string niche = 2;
+  string country = 3;
+}
+
+message BrandNameResponse {
+  repeated BrandName brandNames = 1;
+}
+
+message BrandColorResponse {
+  repeated BrandColor brandColors = 1;
+}
+
+message BrandLogoResponse {
+  repeated BrandLogo brandLogos = 1;
+}
+
+message StrategyResponse {
+  string strategy = 1
+}
+message BrandName {
+  string name = 1;
+}
+
+message BrandColor {
+  string color = 1;
+}
+
+message BrandLogo {
+  string logoUrl = 1;
+}
