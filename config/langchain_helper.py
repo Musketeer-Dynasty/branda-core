@@ -1,5 +1,6 @@
 import json
 import os
+import random
 import re
 
 import markdown
@@ -9,6 +10,7 @@ from langchain_core.prompts import PromptTemplate
 from langchain_google_genai import GoogleGenerativeAI as gai
 from langchain_google_vertexai.vision_models import VertexAIImageGeneratorChat
 from langchain_openai import OpenAI
+import requests
 
 
 md = markdown.Markdown()
@@ -40,7 +42,7 @@ def generate_brand_color(industry: str, niche: str):
         google_api_key=os.getenv("GOOGLE_AI_API_KEY"),
     )
     prompt_template_name = PromptTemplate(
-        template="I have a business with the niche being {niche}, and it is operating in the {industry} industry.Give me 3 sets of complete set of brand colors in HEX codes for a brand in {industry} industry, put it is a array format",
+        template="I have a business with the niche being {niche}, and it is operating in the {industry} industry.Give me 3 complete sets of brand colors in HEX codes for a brand in {industry} industry, put it is a array format",
         input_variables=["industry", "niche"],
     )
 
@@ -132,7 +134,7 @@ def generate_logo(industry: str, niche: str):
 def generate_pattern(industry: str):
     llm = openai.OpenAI(temperature=0.8, api_key=os.getenv("OPENAI_API_KEY"))
     prompt_template_name = PromptTemplate(
-        template="give me a svg repeated pattern that can be used for background color or image in {industry} company website or flier",
+        template="give me a svg repeated pattern that can be used for background color or image in {industry}",
         input_variables=["industry"],
     )
     # name_chain = LLMChain(llm=llm, prompt=prompt_template_name)
@@ -165,5 +167,15 @@ def generate_pics(industry: str):
     return response
 
 
-ans = generate_brand_messaging("blockchain", "defi")
-print(ans)
+def generate_fonts():
+    API_KEY = os.getenv("GOOGLE_FONTS_API_KEY")
+    url = "https://www.googleapis.com/webfonts/v1/webfonts?key=" + API_KEY
+    response = requests.get(url, timeout=5)
+
+    fonts = response.json()
+    list_of_fonts = fonts["items"]
+
+    # Select 3 random fonts
+    random_fonts = random.sample(list_of_fonts, 3)
+
+    return {"fonts": random_fonts}
